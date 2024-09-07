@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -38,12 +39,12 @@ public class Venda {
     private UUID id;
 
     @ManyToMany
-    @JoinTable(
-        name = "venda_produto",
-        joinColumns = @JoinColumn(name = "venda_id"),
-        inverseJoinColumns = @JoinColumn(name = "produto_id")
-    )
+    @JoinTable(name = "venda_produto", joinColumns = @JoinColumn(name = "venda_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produtos;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
     @Column(name = "quantidade", nullable = false)
     @NotNull(message = "A quantidade é obrigatória")
