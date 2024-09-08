@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Cliente</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Cadastrar Cliente</h1>
+        <form th:action="@{/clientes/novo}" th:object="${cliente}" method="post">
+            <div class="form-group">
+                <label for="nomeCompleto">Nome Completo</label>
+                <input type="text" class="form-control" id="nomeCompleto" th:field="*{nomeCompleto}" placeholder="Nome Completo">
+                <div class="text-danger" th:if="${#fields.hasErrors('nomeCompleto')}" th:errors="*{nomeCompleto}">Nome é obrigatório</div>
+            </div>
+            <div class="form-group">
+                <label for="endereco">Endereço</label>
+                <input type="text" class="form-control" id="endereco" th:field="*{endereco}" placeholder="Endereço">
+                <div class="text-danger" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}">Endereço é obrigatório</div>
+            </div>
+            <div class="form-group">
+                <label for="pais">País</label>
+                <input type="text" class="form-control" id="pais" th:field="*{pais}" placeholder="País">
+                <div class="text-danger" th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}">País é obrigatório</div>
+            </div>
+            <div class="form-group">
+                <label for="contato">Contato</label>
+                <input type="text" class="form-control" id="contato" th:field="*{contato}" placeholder="Contato">
+                <div class="text-danger" th:if="${#fields.hasErrors('contato')}" th:errors="*{contato}">Contato é obrigatório</div>
+            </div>
+            <div class="form-group">
+                <label>Tipo</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="brasileiro" th:field="*{isBrasileiro}" value="true">
+                    <label class="form-check-label" for="brasileiro">
+                        Brasileiro
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="internacional" th:field="*{isBrasileiro}" value="false">
+                    <label class="form-check-label" for="internacional">
+                        Internacional
+                    </label>
+                </div>
+                <div class="text-danger" th:if="${#fields.hasErrors('isBrasileiro')}" th:errors="*{isBrasileiro}">Selecione o tipo</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/clientes" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

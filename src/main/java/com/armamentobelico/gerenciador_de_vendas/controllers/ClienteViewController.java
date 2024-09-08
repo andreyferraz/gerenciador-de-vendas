@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.armamentobelico.gerenciador_de_vendas.models.Cliente;
 import com.armamentobelico.gerenciador_de_vendas.services.ClienteService;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/clientes")
@@ -32,6 +35,20 @@ public class ClienteViewController {
     public String viewAllClientes(Model model){
         model.addAttribute("clientes", clienteService.getAllClientes());
         return "clientes-list";
+    }
+
+    // Página para criar um novo cliente
+    @GetMapping("/novo")
+    public String showCreateClienteForm(Model model){
+        model.addAttribute("cliente", new Cliente());
+        return "create-cliente";
+    }
+
+    // Método para processar a criação de um novo cliente
+    @PostMapping("/novo")
+    public String createCliente(@ModelAttribute Cliente cliente){
+        clienteService.createCliente(cliente);
+        return "redirect:/clientes";
     }
 
 }
