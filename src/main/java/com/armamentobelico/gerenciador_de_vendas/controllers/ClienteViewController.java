@@ -9,6 +9,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,5 +77,12 @@ public class ClienteViewController {
         clienteService.updateCliente(cliente);
         return "redirect:/clientes";
     }
+
+    // Método para excluir um cliente
+    @GetMapping("/deletar/{id}")
+    public String deleteCliente(@PathVariable UUID id){
+        clienteService.deleteCliente(id);
+        return "redirect:/clientes";
+    }    
 
 }

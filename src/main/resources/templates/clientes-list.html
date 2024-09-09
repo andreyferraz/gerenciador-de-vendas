@@ -29,9 +29,9 @@
                     <td>
                         <a th:href="@{/clientes/{id}(id=${cliente.id})}" class="btn btn-info btn-sm">Ver</a>
                         <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="btn btn-warning btn-sm">Editar</a>
-                        <form th:action="@{/clientes/{id}/deletar(id=${cliente.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                        </form>
+                        <a th:href="@{/clientes/deletar/{id}(id=${cliente.id})}" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esse cliente?');" class="btn btn-danger btn-sm">Excluir</button>
+                        </a>                        
                     </td>
                 </tr>
             </tbody>
