@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Cliente</title>
+    <title>Editar Cliente</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Cadastrar Cliente</h1>
-        <form th:action="@{/clientes/novo}" th:object="${cliente}" method="post">
+        <h1>Editar Cliente</h1>
+        <form th:action="@{/clientes/{id}(id=${cliente.id})}" th:object="${cliente}" method="post">
             <div class="form-group">
                 <label for="nomeCompleto">Nome Completo</label>
                 <input type="text" class="form-control" id="nomeCompleto" th:field="*{nomeCompleto}" placeholder="Nome Completo">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="text-danger" th:if="${#fields.hasErrors('isBrasileiro')}" th:errors="*{isBrasileiro}">Selecione o tipo</div>
             </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
             <a href="/clientes" class="btn btn-secondary">Voltar</a>
         </form>
     </div>

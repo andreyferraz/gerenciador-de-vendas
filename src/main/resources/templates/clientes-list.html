@@ -28,7 +28,7 @@
                     <td th:text="${cliente.contato}"></td>
                     <td>
                         <a th:href="@{/clientes/{id}(id=${cliente.id})}" class="btn btn-info btn-sm">Ver</a>
-                        <a th:href="@{/clientes/{id}/editar(id=${cliente.id})}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="btn btn-warning btn-sm">Editar</a>
                         <form th:action="@{/clientes/{id}/deletar(id=${cliente.id})}" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                         </form>

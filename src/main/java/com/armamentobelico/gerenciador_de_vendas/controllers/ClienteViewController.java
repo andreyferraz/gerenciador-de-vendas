@@ -2,6 +2,7 @@ package com.armamentobelico.gerenciador_de_vendas.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.armamentobelico.gerenciador_de_vendas.models.Cliente;
 import com.armamentobelico.gerenciador_de_vendas.services.ClienteService;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -37,6 +39,14 @@ public class ClienteViewController {
         return "clientes-list";
     }
 
+    // Página para visualizar os detalhes de um cliente
+    @GetMapping("/{id}")
+    public String viewClienteDetails(@PathVariable UUID id, Model model){
+        Cliente cliente = clienteService.getClienteById(id);
+        model.addAttribute("cliente", cliente);
+        return "cliente-detalhes";
+    }
+
     // Página para criar um novo cliente
     @GetMapping("/novo")
     public String showCreateClienteForm(Model model){
@@ -44,10 +54,26 @@ public class ClienteViewController {
         return "create-cliente";
     }
 
+    // Página para editar um cliente
+    @GetMapping("/editar/{id}")
+    public String showEditClienteForm(@PathVariable UUID id, Model model){
+        Cliente cliente = clienteService.getClienteById(id);
+        model.addAttribute("cliente", cliente);
+        return "editar-cliente";
+    }
+
     // Método para processar a criação de um novo cliente
     @PostMapping("/novo")
     public String createCliente(@ModelAttribute Cliente cliente){
         clienteService.createCliente(cliente);
+        return "redirect:/clientes";
+    }
+
+    // Método para processar a edição de um cliente
+    @PostMapping("/{id}")
+    public String updateCliente(@PathVariable UUID id, @ModelAttribute Cliente cliente){
+        cliente.setId(id);
+        clienteService.updateCliente(cliente);
         return "redirect:/clientes";
     }
 

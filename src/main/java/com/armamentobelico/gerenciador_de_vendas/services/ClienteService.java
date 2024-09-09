@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.armamentobelico.gerenciador_de_vendas.exceptions.ClienteNotFoundException;
@@ -29,14 +30,11 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente updateCliente(UUID id, Cliente cliente) {
-        Cliente existingCliente = getClienteById(id);
-        existingCliente.setNomeCompleto(cliente.getNomeCompleto());
-        existingCliente.setEndereco(cliente.getEndereco());
-        existingCliente.setPais(cliente.getPais());
-        existingCliente.setIsBrasileiro(cliente.getIsBrasileiro());
-        existingCliente.setContato(cliente.getContato());
-        return clienteRepository.save(existingCliente);
+    public Cliente updateCliente(Cliente cliente) {
+              if(!clienteRepository.existsById(cliente.getId())) {
+            throw new ClienteNotFoundException("Cliente com o ID" + cliente.getId() + "não encontrado");
+        }
+        return clienteRepository.save(cliente);
     }
 
     public void deleteCliente(UUID id) {
