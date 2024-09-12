@@ -6,8 +6,10 @@
     <title>Lista de Clientes</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body> 
+    <nav th:insert="fragments/menu :: nav"></nav>
     <div class="container mt-5">
+        
         <h1>Lista de Clientes</h1>
         <a href="/clientes/novo" class="btn btn-primary mb-3">Adicionar Novo Cliente</a>
         <table class="table table-striped">

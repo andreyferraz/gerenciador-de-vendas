@@ -69,4 +69,11 @@ public class ProdutoViewController {
         return "redirect:/produtos";
     }
 
+    // Método para excluir um produto
+    @GetMapping("/deletar/{id}")
+    public String deleteProduto(@PathVariable UUID id){
+        produtoService.deleteProduto(id);
+        return "redirect:/produtos";
+    }
+
 }
