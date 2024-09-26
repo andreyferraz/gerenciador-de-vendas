@@ -25,16 +25,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Produto {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // Gera UUID automaticamente
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @Column(name = "nome", nullable = false)
     @NotBlank(message = "Nome do produto é obrigatório")
     private String nome;
-
-    @ManyToMany(mappedBy = "produtos")
-    private List<Venda> vendas;
 }
+

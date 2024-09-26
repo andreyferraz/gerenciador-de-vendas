@@ -22,18 +22,20 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Itera sobre as vendas recebidas no model -->
                 <tr th:each="venda : ${vendas}">
                     <td th:text="${venda.cliente.nomeCompleto}"></td>
-                    <!-- Ajuste de formatação da data -->
                     <td th:text="${#temporals.format(venda.dataCompra, 'dd/MM/yyyy')}"></td>
-                    <td th:text="${venda.quantidade}"></td>
+                    <td>
+                        <div th:each="pq : ${venda.produtos}">
+                            <p th:text="${pq.quantidade} + ' ' + ${pq.produto.nome}"></p>
+                        </div>
+                    </td>
                     <td th:text="${venda.enviada ? 'Sim' : 'Não'}"></td>
                     <td>
                         <a th:href="@{/vendas/{id}(id=${venda.id})}" class="btn btn-info">Ver Detalhes</a>
                     </td>
                 </tr>
-            </tbody>
+            </tbody>   
         </table>
         
         <a href="/vendas/nova" class="btn btn-primary">Nova Venda</a>

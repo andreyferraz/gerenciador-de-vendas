@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.armamentobelico.gerenciador_de_vendas.exceptions.VendaNotFoundException;
+import com.armamentobelico.gerenciador_de_vendas.models.ProdutoQuantidade;
 import com.armamentobelico.gerenciador_de_vendas.models.Venda;
 import com.armamentobelico.gerenciador_de_vendas.repository.VendaRepository;
 
@@ -26,13 +27,22 @@ public class VendaService {
     }
 
     public Venda createVenda(Venda venda) {
+        // Validação das quantidades dos produtos
+        for (ProdutoQuantidade pq : venda.getProdutos()) {
+            if (pq.getQuantidade() == null || pq.getQuantidade() < 1) {
+                throw new IllegalArgumentException("Quantidade do produto não pode ser menor que 1");
+            }
+        }
         return vendaRepository.save(venda);
     }
 
     public Venda updateVenda(UUID id, Venda venda) {
         Venda existingVenda = getVendaById(id);
+        
+        // Atualiza os produtos e as quantidades
         existingVenda.setProdutos(venda.getProdutos());
-        existingVenda.setQuantidade(venda.getQuantidade());
+        
+        // Removido a atualização de quantidade direta, pois agora faz parte de ProdutoQuantidade
         existingVenda.setDataCompra(venda.getDataCompra());
         existingVenda.setEnviada(venda.getEnviada());
         return vendaRepository.save(existingVenda);
@@ -47,3 +57,4 @@ public class VendaService {
         return vendaRepository.findByEnviada(enviada);
     }
 }
+

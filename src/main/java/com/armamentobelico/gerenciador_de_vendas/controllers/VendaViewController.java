@@ -51,9 +51,16 @@ public class VendaViewController {
 
     // Método para processar a criação de uma nova venda
     @PostMapping("/nova")
-    public String createVenda(@ModelAttribute Venda venda){
-        vendaService.createVenda(venda);
-        return "redirect:/vendas";
+    public String createVenda(@ModelAttribute Venda venda, Model model) {
+        try {
+            vendaService.createVenda(venda);
+            return "redirect:/vendas";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("clientes", clienteService.getAllClientes());
+            model.addAttribute("produtos", produtoService.getAllProdutos());
+            return "create-venda";
+        }
     }
 
 }

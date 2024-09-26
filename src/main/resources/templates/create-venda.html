@@ -89,5 +89,8 @@
             <a href="/vendas" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>    
 </body>
 </html>
