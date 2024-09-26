@@ -3,7 +3,7 @@ out
 .project
 .settings
 .metadata
-.properties
+/src/main/resources/application.properties
 *.log
 *.zip
 *.class
