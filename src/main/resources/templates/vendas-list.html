@@ -25,7 +25,8 @@
                 <!-- Itera sobre as vendas recebidas no model -->
                 <tr th:each="venda : ${vendas}">
                     <td th:text="${venda.cliente.nomeCompleto}"></td>
-                    <td th:text="${#dates.format(venda.dataCompra, 'dd/MM/yyyy')}"></td>
+                    <!-- Ajuste de formatação da data -->
+                    <td th:text="${#temporals.format(venda.dataCompra, 'dd/MM/yyyy')}"></td>
                     <td th:text="${venda.quantidade}"></td>
                     <td th:text="${venda.enviada ? 'Sim' : 'Não'}"></td>
                     <td>

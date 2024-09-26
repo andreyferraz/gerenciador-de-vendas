@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Venda</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        // Variável global para armazenar as opções de produtos (vai ser preenchida ao carregar a página)
+        let productOptions = '';
+
+        // Função para inicializar as opções de produtos
+        function initializeProductOptions() {
+            const selectElement = document.querySelector('#produto_0');
+            if (selectElement) {
+                productOptions = selectElement.innerHTML;  // Salva as opções de produtos
+            }
+        }
+
+        // Função para adicionar um novo produto e quantidade
+        function adicionarProduto() {
+            // Seleciona o container onde os campos serão adicionados
+            const produtosContainer = document.getElementById('produtos-container');
+            // Define o índice com base no número atual de elementos no container
+            const index = produtosContainer.children.length;
+
+            // Cria um novo div para o conjunto de campos de produto e quantidade
+            const div = document.createElement('div');
+            div.classList.add('form-group', 'produto-group', 'mt-3');
+            
+            // Define o conteúdo HTML com select para produto e input para quantidade, reutilizando as opções
+            div.innerHTML = `
+                <label for="produto_${index}">Produto</label>
+                <select class="form-control" id="produto_${index}" name="produtos[${index}].produto" required>
+                    ${productOptions}  <!-- Usa as opções previamente carregadas -->
+                </select>
+                <label for="quantidade_${index}" class="mt-2">Quantidade</label>
+                <input type="number" class="form-control" id="quantidade_${index}" name="produtos[${index}].quantidade" required>
+            `;
+
+            // Adiciona o novo div ao container
+            produtosContainer.appendChild(div);
+        }
+
+        // Inicializa as opções de produtos quando o DOM estiver completamente carregado
+        document.addEventListener('DOMContentLoaded', initializeProductOptions);
+    </script>
+</head>
+<body>
+    <nav th:insert="fragments/menu :: nav"></nav>
+    <div class="container mt-5">
+        <h1>Criar Nova Venda</h1>
+        <form th:action="@{/vendas/nova}" th:object="${venda}" method="post">
+            <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <select class="form-control" id="cliente" th:field="*{cliente}" required>
+                    <option th:each="cliente : ${clientes}" 
+                            th:value="${cliente.id}" 
+                            th:text="${cliente.nomeCompleto}">Selecione um cliente</option>
+                </select>
+            </div>
+
+            <!-- Container para os campos dinâmicos de produtos e quantidades -->
+            <div id="produtos-container">
+                <div class="form-group produto-group">
+                    <label for="produto_0">Produto</label>
+                    <select class="form-control" id="produto_0" name="produtos[0].produto" required>
+                        <option th:each="produto : ${produtos}" 
+                                th:value="${produto.id}" 
+                                th:text="${produto.nome}">Selecione um produto</option>
+                    </select>
+                    <label for="quantidade_0" class="mt-2">Quantidade</label>
+                    <input type="number" class="form-control" id="quantidade_0" name="produtos[0].quantidade" required>
+                </div>
+            </div>
+
+            <!-- Botão para adicionar mais produtos -->
+            <button type="button" class="btn btn-secondary mb-3" onclick="adicionarProduto()">Adicionar Produto</button>
+
+            <div class="form-group">
+                <label for="dataCompra">Data da Compra</label>
+                <input type="date" class="form-control" id="dataCompra" th:field="*{dataCompra}" required>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="enviada" th:field="*{enviada}">
+                <label class="form-check-label" for="enviada">Enviada</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/vendas" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
