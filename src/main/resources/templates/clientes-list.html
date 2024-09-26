@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Clientes</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body> 
+
+<body>
     <nav th:insert="fragments/menu :: nav"></nav>
     <div class="container mt-5">
-        
+
         <h1>Lista de Clientes</h1>
         <a href="/clientes/novo" class="btn btn-primary mb-3">Adicionar Novo Cliente</a>
+
+        <!-- Links para listar clientes Nacionais e Internacionais -->
+        <div class="mb-3">
+            <a href="/clientes/nacionais" class="btn btn-secondary">Listar Clientes Nacionais</a>
+            <a href="/clientes/internacionais" class="btn btn-secondary">Listar Clientes Internacionais</a>
+        </div>
+
+        <!-- Formulário de pesquisa -->
+        <form method="get" th:action="@{/clientes/search}" class="mb-3">
+            <div class="form-row align-items-end">
+                <div class="col">
+                    <input type="text" name="nome" class="form-control" placeholder="Pesquisar por Nome">
+                </div>
+                <div class="col">
+                    <input type="text" name="pais" class="form-control" placeholder="Filtrar por País">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-secondary">Pesquisar</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Exibir a quantidade de clientes filtrados -->
+        <div>
+            <p>Total de Clientes Filtrados: <span th:text="${quantidadeFiltrados}"></span></p>
+        </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -23,17 +52,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="cliente : ${clientes}">
+                <tr th:each="cliente, iterStat : ${clientes}">
                     <td th:text="${cliente.nomeCompleto}"></td>
                     <td th:text="${cliente.endereco}"></td>
                     <td th:text="${cliente.pais}"></td>
                     <td th:text="${cliente.contato}"></td>
                     <td>
                         <a th:href="@{/clientes/{id}(id=${cliente.id})}" class="btn btn-info btn-sm">Ver</a>
-                        <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}"
+                            class="btn btn-warning btn-sm">Editar</a>
                         <a th:href="@{/clientes/deletar/{id}(id=${cliente.id})}" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esse cliente?');" class="btn btn-danger btn-sm">Excluir</button>
-                        </a>                        
+                            <button type="submit"
+                                onclick="return confirm('Tem certeza que deseja excluir esse cliente?');"
+                                class="btn btn-danger btn-sm">Excluir</button>
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -43,4 +75,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
