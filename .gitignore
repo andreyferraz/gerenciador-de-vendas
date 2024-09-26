@@ -3,6 +3,7 @@ out
 .project
 .settings
 .metadata
+.properties
 *.log
 *.zip
 *.class
