@@ -44,6 +44,7 @@ public class ClienteViewController {
     public String viewClienteDetails(@PathVariable UUID id, Model model){
         Cliente cliente = clienteService.getClienteById(id);
         model.addAttribute("cliente", cliente);
+        model.addAttribute("historicoCompras", cliente.getHistoricoCompras()); // Adicione esta linha
         return "cliente-detalhes";
     }
 
